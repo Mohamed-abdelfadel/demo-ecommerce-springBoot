@@ -1,0 +1,88 @@
+package com.example.practise.spring.service;
+
+import com.example.practise.spring.dto.OrderDto;
+import com.example.practise.spring.entity.Category;
+import com.example.practise.spring.entity.Order;
+import com.example.practise.spring.entity.Product;
+import com.example.practise.spring.repository.OrderRepository;
+import com.example.practise.spring.repository.ProductRepository;
+import org.aspectj.weaver.ast.Or;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class OrderServices {
+
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+
+    public OrderServices(OrderRepository orderRepository, ProductService productService, ProductRepository productRepository) {
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+    }
+
+    public List<Order> get(){
+        return orderRepository.findAll();
+    }
+
+    public Order add(Order order){
+        return orderRepository.save(order);
+    }
+
+    public List<OrderDto>findByCustomerId(Long id){
+        return orderRepository.findByCustomerId(id);
+    }
+    public List<OrderDto>findByStatusId(Long id){
+        return orderRepository.findByStatusId(id);
+    }
+
+    public Order getOrderWithProducts(Long orderId) {
+        return orderRepository.findById(orderId).orElseThrow();
+    }
+
+    public void addProductsToOrder(Long orderId, Long productId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+
+        if (optionalOrder.isPresent() && optionalProduct.isPresent()) {
+            Order order = optionalOrder.get();
+            Product product = optionalProduct.get();
+
+            order.getProducts().add(product);
+            product.getOrders().add(order);
+
+            orderRepository.save(order);
+            productRepository.save(product);
+        }
+    }
+
+    public Order shipped(Long id) {
+        Order existingOrder = orderRepository.findById(id).orElseThrow();
+        existingOrder.setReceived(true);
+        return orderRepository.save(existingOrder);
+    }
+
+    public Order update(Long id , Order order){
+        Order existingOrder = orderRepository.findById(id).orElseThrow();
+        if (order.getCustomer() != null) {
+            existingOrder.setCustomer(order.getCustomer());
+        }
+        if (order.getStatus() != null) {
+            existingOrder.setStatus(order.getStatus());
+        }
+        if (order.getReceived() != null) {
+            existingOrder.setReceived(order.getReceived());
+        }
+        if (order.getDate() != null) {
+            existingOrder.setDate(order.getDate());
+        }
+        if (order.getProducts() != null) {
+            existingOrder.setProducts(order.getProducts());
+        }
+        return orderRepository.save(existingOrder);
+    }
+
+}
+
