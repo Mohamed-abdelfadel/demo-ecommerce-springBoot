@@ -15,7 +15,7 @@ import java.util.Date;
 public class OrderDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+private Long id;
     private Date date;
     private Boolean received;
 }

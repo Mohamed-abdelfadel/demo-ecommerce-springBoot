@@ -12,6 +12,9 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order,Long> {
+
+    @Query("SELECT new com.example.practise.spring.dto.OrderDto(o.id, o.date, o.received) FROM Order o")
+    List<OrderDto> findOrders();
     @Query("SELECT new com.example.practise.spring.dto.OrderDto(o.id, o.date, o.received) FROM Order o WHERE o.customer.id = :id")
     List<OrderDto> findByCustomerId(@Param("id") Long id);
     @Query("SELECT new com.example.practise.spring.dto.OrderDto(o.id, o.date, o.received) FROM Order o WHERE o.status.id = :id")

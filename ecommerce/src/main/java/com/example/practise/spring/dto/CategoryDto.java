@@ -4,22 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class ProductDto {
-
+public class CategoryDto {
     private Long id;
 
     private String name;
-
-    private Double price;
-
-    private String brand;
-
-    private String details;
-
-    private Integer stock;
-
-//    private CategoryDto category;
 }

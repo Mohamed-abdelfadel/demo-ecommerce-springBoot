@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address,Long> {
-
+    @Query("SELECT new com.example.practise.spring.dto.AddressDto(a.id, a.name) FROM Address a ")
+    List<AddressDto> findAllAddresses();
     @Query("SELECT new com.example.practise.spring.dto.AddressDto(a.id, a.name) FROM Address a WHERE a.customer.id = :id")
     List<AddressDto> findByCustomerId(@Param("id") Long id);}

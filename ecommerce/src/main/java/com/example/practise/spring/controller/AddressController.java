@@ -2,7 +2,7 @@ package com.example.practise.spring.controller;
 
 import com.example.practise.spring.dto.AddressDto;
 import com.example.practise.spring.entity.Address;
-import com.example.practise.spring.service.AddressService;
+import com.example.practise.spring.service.interfaces.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping
-    public List<Address> getAddresses(){
+    public List<AddressDto> getAddresses(){
         return addressService.getAddresses();
     }
     @PostMapping

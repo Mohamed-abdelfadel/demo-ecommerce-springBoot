@@ -1,5 +1,6 @@
 package com.example.practise.spring.repository;
 
+import com.example.practise.spring.entity.Address;
 import com.example.practise.spring.entity.Category;
 import com.example.practise.spring.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,6 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+    List<Category> findByActivatedTrue();
+
 }

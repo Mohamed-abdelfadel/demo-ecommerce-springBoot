@@ -1,4 +1,4 @@
-package com.example.practise.spring.service;
+package com.example.practise.spring.service.implementations;
 
 import com.example.practise.spring.dto.OrderDto;
 import com.example.practise.spring.entity.Order;
@@ -6,12 +6,13 @@ import com.example.practise.spring.entity.OrderStatus;
 import com.example.practise.spring.entity.Product;
 import com.example.practise.spring.repository.OrderRepository;
 import com.example.practise.spring.repository.ProductRepository;
+import com.example.practise.spring.service.interfaces.OrderService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServices {
+public class OrderServices implements OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
@@ -20,15 +21,12 @@ public class OrderServices {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
     }
-
-    public List<Order> get(){
-        return orderRepository.findAll();
+    public List<OrderDto> get(){
+        return orderRepository.findOrders();
     }
-
     public Order add(Order order){
         return orderRepository.save(order);
     }
-
     public List<OrderDto>findByCustomerId(Long id){
         return orderRepository.findByCustomerId(id);
     }

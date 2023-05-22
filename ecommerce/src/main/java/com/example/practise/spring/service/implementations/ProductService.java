@@ -1,25 +1,42 @@
-package com.example.practise.spring.service;
+package com.example.practise.spring.service.implementations;
 
 import com.example.practise.spring.dto.ProductDto;
 import com.example.practise.spring.entity.Category;
 import com.example.practise.spring.entity.Product;
+import com.example.practise.spring.repository.CategoryRepository;
 import com.example.practise.spring.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class ProductService {
+public class ProductService implements com.example.practise.spring.service.interfaces.ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
+    public List<ProductDto> get() {
+        List<ProductDto> dto = productRepository.findByActivatedTrueAndCategoryActivatedTrue();
+        return dto.stream()
+                .sorted(Comparator.comparing(ProductDto::getId))
+                .collect(Collectors.toList());
+    }
+    public Product add(Long id, Product product) {
+        Category category = categoryRepository.findById(id).orElseThrow();
+        Product currentproduct = new Product();
+        currentproduct.setName(product.getName());
+        currentproduct.setCost(product.getCost());
+        currentproduct.setPrice(product.getPrice());
+        currentproduct.setBrand(product.getBrand());
+        currentproduct.setDetails(product.getDetails());
+        currentproduct.setStock(product.getStock());
+        currentproduct.setActivated(product.getActivated());
+        currentproduct.setCategory(category);
+        return productRepository.save(currentproduct);
 
-    public List<Product> get() {
-            return productRepository.findAll();
-        }
-    public Product add(Product product) {
-        return productRepository.save(product);
     }
     public Product update(Long productId, Product product) {
         Product existingProduct = productRepository.findById(productId).orElseThrow();
@@ -38,8 +55,8 @@ public class ProductService {
         if (product.getPrice() != null) {
             existingProduct.setPrice(product.getPrice());
         }
-        if (product.getAmount() != null) {
-            existingProduct.setAmount(product.getAmount());
+        if (product.getStock() != null) {
+            existingProduct.setStock(product.getStock());
         }
         if (product.getActivated() != null) {
             existingProduct.setActivated(product.getActivated());
@@ -58,7 +75,7 @@ public class ProductService {
         return productRepository.save(existingProduct);
     }
 
-    public List<Product> priceBetween(Double minValue , Double maxValue){
+    public List<ProductDto> priceBetween(Double minValue , Double maxValue){
         return productRepository.findAllByPriceBetween(minValue, maxValue);
     }
     public List<ProductDto> getProductsByCategoriesAndPrices(Double minValue, Double maxValue, Long categoryId) {

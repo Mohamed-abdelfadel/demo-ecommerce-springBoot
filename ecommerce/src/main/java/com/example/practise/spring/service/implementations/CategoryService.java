@@ -1,6 +1,5 @@
-package com.example.practise.spring.service;
+package com.example.practise.spring.service.implementations;
 import com.example.practise.spring.entity.Category;
-import com.example.practise.spring.entity.Product;
 import com.example.practise.spring.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,11 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoryService {
+public class CategoryService implements com.example.practise.spring.service.interfaces.CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
     public List<Category> get() {
-        return categoryRepository.findAll();
+        return categoryRepository.findByActivatedTrue();
     }
 
     public Category add(Category category) {

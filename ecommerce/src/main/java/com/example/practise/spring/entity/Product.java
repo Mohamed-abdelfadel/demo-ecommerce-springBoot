@@ -30,7 +30,7 @@ public class Product {
 
     private String details;
 
-    private Integer amount;
+    private Integer stock;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

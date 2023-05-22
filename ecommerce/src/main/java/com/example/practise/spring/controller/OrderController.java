@@ -2,8 +2,8 @@ package com.example.practise.spring.controller;
 
 import com.example.practise.spring.dto.OrderDto;
 import com.example.practise.spring.entity.Order;
-import com.example.practise.spring.service.OrderServices;
-import org.aspectj.weaver.ast.Or;
+import com.example.practise.spring.entity.OrderStatus;
+import com.example.practise.spring.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +13,10 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrderController {
     @Autowired
-    private OrderServices orderServices;
+    private OrderService orderServices;
 
     @GetMapping
-    public List<Order> get(){
+    public List<OrderDto> get(){
         return orderServices.get();
     }
     @PostMapping
@@ -43,7 +43,10 @@ public class OrderController {
     public void addProductsToOrder(@PathVariable Long orderId, @PathVariable Long productId) {
         orderServices.addProductsToOrder(orderId, productId);
     }
-
+    @PutMapping("/{id}/status")
+    public Order status(@PathVariable Long id , @RequestBody OrderStatus status){
+        return orderServices.status(id , status);
+    }
     @PutMapping("/{id}")
     public Order update(@PathVariable Long id ,@RequestBody Order order){
         return orderServices.update(id,order);

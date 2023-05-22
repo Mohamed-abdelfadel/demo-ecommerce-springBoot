@@ -1,8 +1,7 @@
 package com.example.practise.spring.controller;
 
 import com.example.practise.spring.entity.Category;
-import com.example.practise.spring.entity.Product;
-import com.example.practise.spring.service.CategoryService;
+import com.example.practise.spring.service.interfaces.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +23,6 @@ public class CategoryController {
     public Category update(@PathVariable Long id,@RequestBody Category category) {
         return categoryService.update(id,category);
     }
-
-    
     @PutMapping("/{id}/activate")
     public Category activate(@PathVariable Long id) {
         return categoryService.activate(id) ;
