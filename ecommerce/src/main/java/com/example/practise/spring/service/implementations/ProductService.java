@@ -3,7 +3,6 @@ package com.example.practise.spring.service;
 import com.example.practise.spring.dto.ProductDto;
 import com.example.practise.spring.entity.Category;
 import com.example.practise.spring.entity.Product;
-import com.example.practise.spring.exception.ProductNotFound;
 import com.example.practise.spring.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,7 +61,9 @@ public class ProductService {
     public List<Product> priceBetween(Double minValue , Double maxValue){
         return productRepository.findAllByPriceBetween(minValue, maxValue);
     }
-
+    public List<ProductDto> getProductsByCategoriesAndPrices(Double minValue, Double maxValue, Long categoryId) {
+        return productRepository.getProductsByCategoriesAndPrices(minValue, maxValue, categoryId);
+    }
     public List<ProductDto> getAllProductsByCategoryId(Long categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }

@@ -1,14 +1,12 @@
 package com.example.practise.spring.service;
 
 import com.example.practise.spring.dto.OrderDto;
-import com.example.practise.spring.entity.Category;
 import com.example.practise.spring.entity.Order;
+import com.example.practise.spring.entity.OrderStatus;
 import com.example.practise.spring.entity.Product;
 import com.example.practise.spring.repository.OrderRepository;
 import com.example.practise.spring.repository.ProductRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -59,11 +57,15 @@ public class OrderServices {
     }
 
     public Order shipped(Long id) {
-        Order existingOrder = orderRepository.findById(id).orElseThrow();
-        existingOrder.setReceived(true);
-        return orderRepository.save(existingOrder);
+        Order order = orderRepository.findById(id).orElseThrow();
+        order.setReceived(true);
+        return orderRepository.save(order);
     }
-
+    public Order status(Long id , OrderStatus status){
+        Order order = orderRepository.findById(id).orElseThrow();
+        order.setStatus(status);
+        return orderRepository.save(order);
+    }
     public Order update(Long id , Order order){
         Order existingOrder = orderRepository.findById(id).orElseThrow();
         if (order.getCustomer() != null) {
@@ -77,9 +79,6 @@ public class OrderServices {
         }
         if (order.getDate() != null) {
             existingOrder.setDate(order.getDate());
-        }
-        if (order.getProducts() != null) {
-            existingOrder.setProducts(order.getProducts());
         }
         return orderRepository.save(existingOrder);
     }
