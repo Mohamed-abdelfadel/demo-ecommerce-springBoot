@@ -23,37 +23,10 @@ public class CategoryController {
     public Category update(@PathVariable Long id,@RequestBody Category category) {
         return categoryService.update(id,category);
     }
-    @PutMapping("/{id}/activate")
-    public Category activate(@PathVariable Long id) {
-        return categoryService.activate(id) ;
+    @PutMapping("/{id}/activation")
+    public Category activation(@PathVariable Long id,@RequestParam Boolean activate){
+        return categoryService.activation(id,activate);
     }
-    @PutMapping("/{id}/deactivate")
-    public Category deactivate(@PathVariable Long id) {
-        return categoryService.deactivate(id) ;
-    }
-//    @GetMapping("/{id}")
-//    public Category getCategory(@PathVariable Long id) {
-//        return categoryService.getCategory(id);
-//    }
 
-//    @GetMapping("/activated")
-//    public List<Category> getActivatedCategories() {
-//        return categoryService.getActivatedCategories();
-//    }
-
-//    @GetMapping("/deactivated")
-//    public List<Category> getDeactivatedCategories() {
-//        return categoryService.getDeactivatedCategories();
-//    }
-
-//    @GetMapping("/{id}/products")
-//    public List<Product> getProductsByCategoryId(@PathVariable Long id) {
-//        return categoryService.getProductsByCategoryId(id);
-//    }
-
-//    @DeleteMapping("/{id}")
-//    public void deleteCategory(@PathVariable Long id) {
-//        categoryService.delete(id);
-//    }
 }
 

@@ -1,9 +1,7 @@
 package com.example.practise.spring.repository;
 
 import com.example.practise.spring.dto.ProductDto;
-import com.example.practise.spring.entity.Category;
 import com.example.practise.spring.entity.Product;
-import jakarta.persistence.Tuple;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

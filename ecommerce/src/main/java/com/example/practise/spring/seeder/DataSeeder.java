@@ -5,13 +5,11 @@ import com.example.practise.spring.repository.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.github.javafaker.Faker;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
-
 @Component
 public class DataSeeder {
 
@@ -21,16 +19,20 @@ public class DataSeeder {
     private final  AddressRepository addressRepository;
     private final OrderStatusRepository orderStatusRepository;
     private final OrderRepository orderRepository;
+    private final ItemRepository itemRepository;
+
     private final Faker faker;
+    private static final Random random = new Random();
 
     @Autowired
-    public DataSeeder(CategoryRepository categoryRepository, ProductRepository productRepository , OrderStatusRepository orderStatusRepository , CustomerRepository customerRepository, OrderRepository orderRepository , AddressRepository addressRepository) {
+    public DataSeeder(CategoryRepository categoryRepository, ProductRepository productRepository , OrderStatusRepository orderStatusRepository , CustomerRepository customerRepository, OrderRepository orderRepository , AddressRepository addressRepository, ItemRepository itemRepository) {
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.orderStatusRepository = orderStatusRepository;
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
         this.addressRepository = addressRepository;
+        this.itemRepository = itemRepository;
         this.faker = new Faker();
     }
 
@@ -42,7 +44,7 @@ public class DataSeeder {
         seedCustomers();
         seedAddresses();
         seedOrders();
-
+        seedItems();
     }
 
     private void seedOrderStatus() {
@@ -113,21 +115,27 @@ public class DataSeeder {
         List<Order> orders = new ArrayList<>();
         List<Customer> customers = customerRepository.findAll();
         List<OrderStatus> statuses = orderStatusRepository.findAll();
-        List<Product> products = productRepository.findAll();
         for (int i = 1; i <= 100; i++) {
             Order order = new Order();
             order.setDate(faker.date().future(365, TimeUnit.DAYS));
             order.setReceived(faker.random().nextBoolean());
             order.setStatus(statuses.get(faker.random().nextInt(statuses.size())));
             order.setCustomer(customers.get(faker.random().nextInt(customers.size())));
-            List<Product> orderProducts = new ArrayList<>();
-            for (int j = 0; j < faker.random().nextInt(1, 5); j++) {
-                orderProducts.add(products.get(faker.random().nextInt(products.size())));
-            }
-            order.setProducts(orderProducts);
             orders.add(order);
-
         }
         orderRepository.saveAll(orders);
+    }
+
+    public void seedItems() {
+        List<Order> orders = orderRepository.findAll();
+        List<Product> products = productRepository.findAll();
+
+        for (int i = 1; i <= 300; i++) {
+            Item item = new Item();
+            item.setAmount(random.nextInt(10));
+            item.setOrder(orders.get(faker.random().nextInt(orders.size())));
+            item.setProduct(products.get(faker.random().nextInt(products.size())));
+            itemRepository.save(item);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package com.example.practise.spring.repository;
 
 import com.example.practise.spring.dto.AddressDto;
-import com.example.practise.spring.dto.ProductDto;
 import com.example.practise.spring.entity.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -28,22 +28,18 @@ public class ProductController {
     }
 
 
-    @PutMapping("/{id}/deactivate")
-    public Product deactivate(@PathVariable Long id){
-        return productService.deactivate(id);
-    }
-    @PutMapping("/{id}/activate")
-    public Product activate(@PathVariable Long id){
-        return productService.activate(id);
+    @PutMapping("/{id}/activation")
+    public Product activation(@PathVariable Long id,@RequestParam Boolean activate){
+        return productService.activation(id,activate);
     }
 
 
-    @GetMapping("/price/{minValue}/{maxValue}")
-    public List<ProductDto> priceRange(@PathVariable Double minValue ,@PathVariable Double maxValue ){
+    @GetMapping("/price")
+    public List<ProductDto> priceRange(@RequestParam Double minValue ,@RequestParam Double maxValue ){
         return productService.priceBetween(minValue, maxValue);
     }
-    @GetMapping("/category/{id}/price/{minValue}/{maxValue}")
-    public List<ProductDto> getProductsByCategoriesAndPrices(@PathVariable Long id ,@PathVariable Double minValue ,@PathVariable Double maxValue ){
+    @GetMapping("/category/{id}/price")
+    public List<ProductDto> getProductsByCategoriesAndPrices(@PathVariable Long id ,@RequestParam Double minValue ,@RequestParam Double maxValue ){
         return productService.getProductsByCategoriesAndPrices(minValue,maxValue,id);
     }
     @GetMapping("/category/{id}")

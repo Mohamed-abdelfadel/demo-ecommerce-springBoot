@@ -8,6 +8,5 @@ public interface CategoryService {
     List<Category> get();
     Category add(Category category);
     Category update(Long productId, Category category);
-    Category activate(Long id);
-    Category deactivate(Long id);
+    Category activation(Long id, Boolean activate);
 }

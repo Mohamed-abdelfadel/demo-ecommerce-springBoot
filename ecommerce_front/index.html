@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Ecommerce App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Products</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Categories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Welcome to Ecommerce App</h1>
+    <p class="lead">Shop from a wide range of products at affordable prices</p>
+    <a href="#" class="btn btn-primary my-2">Shop Now</a>
+  </div>
+</section>
+<section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Features</h1>
+    </div>
+  </section>
+
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="card-body">
+            <h5 class="card-title">Fast Delivery</h5>
+            <p class="card-text">Get your products delivered to your doorstep in no time</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="card-body">
+            <h5 class="card-title">Easy Returns</h5>
+            <p class="card-text">Return products hassle-free within 30 days of purchase</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <div class="card-body">
+            <h5 class="card-title">Secure Payments</h5>
+            <p class="card-text">Pay securely using a variety of payment options</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Products</h1>
+    </div>
+  </section>
+</section>
+
+
+<footer class="py-4 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; 2023 
+    Ecommerce App. All rights reserved.</p>
+  </div>
+</footer>
+<style>
+  body{
+    width: 100%;
+    height: 1000px;
+}
+    .card {
+      margin: 0 30px;
+    }
+    img{
+      width: 300px;
+      height: 200px;
+    }
+  </style>
+<script>
+    // Fetch the products from the API
+    fetch('http://127.0.0.1:8080/products')
+      .then(response => response.json())
+      .then(data => {
+        // Get the Products section element
+        const productsSection = document.querySelector('section.py-5');
+  
+        // Loop through the products and create a card for each one
+        for (let i = 0; i < data.length; i += 3) {
+          // Create a row to hold the cards
+          const row = document.createElement('div');
+          row.classList.add('row');
+  
+          // Loop through the next three products and create a card for each one
+          for (let j = i; j < i + 3 && j < data.length; j++) {
+            const product = data[j];
+            if(product.stock <= 10){
+                
+            }
+            const card = document.createElement('div');
+            card.classList.add('col-4');
+            card.innerHTML = `
+              <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                  <img class="card-img-top" src="https://karanzi.websites.co.in/obaju-turquoise/img/product-placeholder.png" alt="${product.name}">
+
+                  <h5 class="card-title">${product.name}</h5>
+                  <p class="card-text">${product.details}</p>
+                  <p class="card-text">Brand: ${product.brand}</p>
+        <p class="card-text ${product.stock < 10 ? 'text-danger' : ''}">${product.stock} pieces left !</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                    </div>
+                    <small class="text-muted">$${product.price.toFixed(2)}</small>
+                  </div>
+                </div>
+              </div>
+            `;
+  
+            // Add the card to the row
+            row.appendChild(card);
+          }
+  
+          // Add the row to the Products section
+          productsSection.appendChild(row);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
+  </script>
+</body>
+
+</html>

@@ -5,14 +5,17 @@ import com.example.practise.spring.entity.Category;
 import com.example.practise.spring.entity.Product;
 import com.example.practise.spring.repository.CategoryRepository;
 import com.example.practise.spring.repository.ProductRepository;
+import com.example.practise.spring.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements com.example.practise.spring.service.interfaces.ProductService {
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -36,8 +39,8 @@ public class ProductService implements com.example.practise.spring.service.inter
         currentproduct.setActivated(product.getActivated());
         currentproduct.setCategory(category);
         return productRepository.save(currentproduct);
-
     }
+
     public Product update(Long productId, Product product) {
         Product existingProduct = productRepository.findById(productId).orElseThrow();
         if (product.getName() != null) {
@@ -64,9 +67,9 @@ public class ProductService implements com.example.practise.spring.service.inter
         return productRepository.save(existingProduct);
     }
 
-    public Product activate(Long id) {
+    public Product activation(Long id, Boolean activate) {
         Product existingProduct = productRepository.findById(id).orElseThrow();
-        existingProduct.setActivated(true);
+        existingProduct.setActivated(activate);
         return productRepository.save(existingProduct);
     }
     public Product deactivate(Long id) {
@@ -84,30 +87,6 @@ public class ProductService implements com.example.practise.spring.service.inter
     public List<ProductDto> getAllProductsByCategoryId(Long categoryId) {
         return productRepository.findByCategoryId(categoryId);
     }
-//    public void deleteProduct(Long id) {
-//        productRepository.deleteById(id);
-//    }
 
-//    public Product getProduct(Long id) {
-//        return productRepository.findById(id).orElseThrow();
-//    }
-
-//    public List<Product> getActivatedProducts() {
-//        return productRepository.findByActivatedTrue();
-//    }
-
-//    public List<Product> getDeactivatedProducts() {
-//        return productRepository.findByActivatedFalse();
-//    }
-
-//    TODO->NOT WORKING
-//    public List<Product> getProductsByCategoryId(Long id) {
-//        return productRepository.findByCategoryId(id);
-//    }
-
-
-//    public Category getCategoryById(Long id){
-//        return productRepository.findCategoryByProductId(id);
-//    }
 
 }

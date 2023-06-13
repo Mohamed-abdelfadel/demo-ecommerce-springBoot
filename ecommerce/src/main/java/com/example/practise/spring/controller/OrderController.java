@@ -1,6 +1,7 @@
 package com.example.practise.spring.controller;
 
 import com.example.practise.spring.dto.OrderDto;
+import com.example.practise.spring.entity.Item;
 import com.example.practise.spring.entity.Order;
 import com.example.practise.spring.entity.OrderStatus;
 import com.example.practise.spring.service.interfaces.OrderService;
@@ -34,14 +35,16 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public Order getOrderWithProducts(@PathVariable Long id) {
-        return orderServices.getOrderWithProducts(id);
+    public List<Item> getItems(@PathVariable Long id) {
+        return orderServices.getItems(id);
     }
 
 
-    @PostMapping("/{orderId}/product/{productId}")
-    public void addProductsToOrder(@PathVariable Long orderId, @PathVariable Long productId) {
-        orderServices.addProductsToOrder(orderId, productId);
+    @PostMapping("/{orderId}/product")
+    public void addItem(@PathVariable Long orderId,
+                        @RequestParam Long productId,
+                        @RequestParam int amount) {
+        orderServices.addItem(orderId, productId, amount);
     }
     @PutMapping("/{id}/status")
     public Order status(@PathVariable Long id , @RequestBody OrderStatus status){

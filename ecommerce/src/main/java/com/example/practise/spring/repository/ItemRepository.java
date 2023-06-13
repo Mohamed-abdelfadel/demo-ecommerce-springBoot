@@ -1,12 +1,14 @@
 package com.example.practise.spring.repository;
 
-import com.example.practise.spring.entity.Category;
+import com.example.practise.spring.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
-    List<Category> findByActivatedTrue();
+public interface ItemRepository extends JpaRepository<Item,Long> {
 
+    List<Item> findByOrderId(Long orderId);
 }

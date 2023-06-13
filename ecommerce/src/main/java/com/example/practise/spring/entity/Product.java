@@ -36,10 +36,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    private Boolean activated;
-
-    @ManyToMany(mappedBy = "products")
-    @JsonIgnore
-    private List<Order> orders = new ArrayList<>();
+    private Boolean activated = true;
 
 }
