@@ -3,11 +3,8 @@ package com.example.practise.spring.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 @Table(name = "items")

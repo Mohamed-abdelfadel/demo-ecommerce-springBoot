@@ -4,7 +4,6 @@ import com.example.practise.spring.dto.OrderDto;
 import com.example.practise.spring.entity.Item;
 import com.example.practise.spring.entity.Order;
 import com.example.practise.spring.entity.OrderStatus;
-import com.example.practise.spring.entity.Product;
 
 import java.util.List;
 

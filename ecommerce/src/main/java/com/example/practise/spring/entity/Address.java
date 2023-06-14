@@ -24,5 +24,8 @@ public class Address {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @NotNull
+    @Column(nullable =true)
+    private String name_l ;
 
 }

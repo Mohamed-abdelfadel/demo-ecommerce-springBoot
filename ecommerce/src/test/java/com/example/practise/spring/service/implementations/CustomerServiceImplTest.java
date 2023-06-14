@@ -1,7 +1,6 @@
 package com.example.practise.spring.service.implementations;
 
 import com.example.practise.spring.entity.Customer;
-import com.example.practise.spring.repository.AddressRepository;
 import com.example.practise.spring.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
